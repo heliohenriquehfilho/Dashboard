@@ -1,0 +1,101 @@
+from dash import Dash, html, dcc, Input, Output
+import pandas as pd
+import plotly.express as px
+from numpy import NaN
+
+avocado = pd.read_csv('/content/drive/MyDrive/avocado-updated-2020.csv')
+
+#Importando os dados mensais
+flp_2017_jan = pd.read_excel('https://docs.google.com/spreadsheets/d/1ssbMIB9-UoABsUKueIelCCVEqhHEV3xT/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2017_fev = pd.read_excel('https://docs.google.com/spreadsheets/d/1p_Op9_bw1fCds25felR6wbcOlSTqTwyb/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2017_mar = pd.read_excel('https://docs.google.com/spreadsheets/d/1LG_1kndVT5_TWME77ziF7-0UfNmAAr9b/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2017_abr = pd.read_excel('https://docs.google.com/spreadsheets/d/1uGTQbPnptZz0oxqV6XTGkhoyVpo5kfsO/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2017_mai = pd.read_excel('https://docs.google.com/spreadsheets/d/1DTDnP8MadBb6bRHeiGci5ymdYNtQslrn/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2017_jun = pd.read_excel('https://docs.google.com/spreadsheets/d/1Nlq8YT0VrTmYmN6m3Iu_0XIi1qKWdw5w/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2017_jul = pd.read_excel('https://docs.google.com/spreadsheets/d/1R0u9HeSAuLzAHMshM8_TCNB5jx7meGYj/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2017_ago = pd.read_excel('https://docs.google.com/spreadsheets/d/1ZjMmmSB23O7l63luGxyTvOvOug3lBM33/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2017_set = pd.read_excel('https://docs.google.com/spreadsheets/d/1nVKZwy-abGvrAVX7gdC8aqn7FJCdUgny/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2017_out = pd.read_excel('https://docs.google.com/spreadsheets/d/1GlkAs67IZhDzTUPcx51VRaUxUrWgD4Gs/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2017_nov = pd.read_excel('https://docs.google.com/spreadsheets/d/1_yDT9DzymA6iIDMfaJvHwknm6_dcQBni/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2017_dez = pd.read_excel('https://docs.google.com/spreadsheets/d/1PGbxlxb8UasGenAolsMfEwwu9dOFKIfm/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2018_jan = pd.read_excel('https://docs.google.com/spreadsheets/d/1VYVTniuJID-Qkt8gJSUdFGT431pDwOT-/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2018_fev = pd.read_excel('https://docs.google.com/spreadsheets/d/1ylNAXY8xnqIlH0l-Lu22HPNXFl-34mB7/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2018_mar = pd.read_excel('https://docs.google.com/spreadsheets/d/1x5KdgPz4yIJbQwuV-4MPl1PT6Ht_-LMz/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2018_abr = pd.read_excel('https://docs.google.com/spreadsheets/d/1oeq11NAiRpte7hDdHACIyUKUEUyEgSBI/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2018_mai = pd.read_excel('https://docs.google.com/spreadsheets/d/14ln6XO2XrTqO4ALYm8tN2cepzaK1YV1j/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2018_jun = pd.read_excel('https://docs.google.com/spreadsheets/d/1VrC7Fcl7sH6bytCEf200G8bPra9aFIWG/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2018_jul = pd.read_excel('https://docs.google.com/spreadsheets/d/1eeedUk9wARY-qI0hJZR-zhQaZ3QGQnZa/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2018_ago = pd.read_excel('https://docs.google.com/spreadsheets/d/1V7aBXKZ5PsezNEq5Ud1cdEV3AZwdjAY7/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2018_set = pd.read_excel('https://docs.google.com/spreadsheets/d/1eAqsfKER-ILsJZNBC0iVF1JMxTa2XxUL/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2018_out = pd.read_excel('https://docs.google.com/spreadsheets/d/1QSPOZuhMXYKasT-qDnOZAIoR5-IU07yk/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2018_nov = pd.read_excel('https://docs.google.com/spreadsheets/d/12L3LAa4RuvIEBx2hFuLuBMylBe6UK_I2/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2018_dez = pd.read_excel('https://docs.google.com/spreadsheets/d/1o0UihVzQhS6rVm4F2uwd6W9clCpDf4dE/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2019_jan = pd.read_excel('https://docs.google.com/spreadsheets/d/10I_pJjvCDAYcI8LwYR5LlyCR_YuwPZqT/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2019_fev = pd.read_excel('https://docs.google.com/spreadsheets/d/1p2AyHsNXDV7LKsSph9uujriwlGICPja-/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true',  parse_dates=['horario'])
+flp_2019_mar = pd.read_excel('https://docs.google.com/spreadsheets/d/1HCP_1g1jxPfwZb8e5oOltxtAo-tUy_9A/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true',  parse_dates=['horario'])
+flp_2019_abr = pd.read_excel('https://docs.google.com/spreadsheets/d/13Hqf6fj_3yEhDCgLj-n22RErjD3azAQ1/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2019_mai = pd.read_excel('https://docs.google.com/spreadsheets/d/19-W6BSOGqcRpr-bPYdmRJ2IW4Aty-JhD/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true',  parse_dates=['horario'])
+flp_2019_jun = pd.read_excel('https://docs.google.com/spreadsheets/d/1_TzJxE4Jf-omJ-5anRcsB67P--Cq0Nz9/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true',  parse_dates=['horario'])
+flp_2019_jul = pd.read_excel('https://docs.google.com/spreadsheets/d/1CJx4O3jGOMltM_HMpculIQiRonEl9mRu/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true',  parse_dates=['horario'])
+flp_2019_ago = pd.read_excel('https://docs.google.com/spreadsheets/d/1eXa-0hCQvdck9e32Cv8LD0NtolEr2Obi/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true',  parse_dates=['horario'])
+flp_2019_set = pd.read_excel('https://docs.google.com/spreadsheets/d/1Gg0bzzLtiVKXWN4IVDhcbGXlNYIZxud_/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true',  parse_dates=['horario'])
+flp_2019_out = pd.read_excel('https://docs.google.com/spreadsheets/d/17g2qXttCf2apHd4hYhiGGND55X0kefn8/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2019_nov = pd.read_excel('https://docs.google.com/spreadsheets/d/1EzFy71dRT5XCJroGmY4nsx02HnFqmQ8Z/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+flp_2019_dez = pd.read_excel('https://docs.google.com/spreadsheets/d/1WE_lRs0yz7CFXIDf_7YnXNJkW38PFWgE/edit?usp=sharing&ouid=117059586873076487778&rtpof=true&sd=true', parse_dates=['horario'])
+
+#Organizando em dataframes anuais
+flp_2017 = pd.concat([flp_2017_jan, flp_2017_fev, flp_2017_mar, flp_2017_abr, flp_2017_mai, flp_2017_jun, flp_2017_jul, flp_2017_ago, flp_2017_set, flp_2017_out, flp_2017_nov, flp_2017_dez]).copy()
+flp_2018 = pd.concat([flp_2018_jan, flp_2018_fev, flp_2018_mar, flp_2018_abr, flp_2018_mai, flp_2018_jun, flp_2018_jul, flp_2018_ago, flp_2018_set, flp_2018_out, flp_2018_nov, flp_2018_dez]).copy()
+flp_2019 = pd.concat([flp_2019_jan, flp_2019_fev, flp_2019_mar, flp_2019_abr, flp_2019_mai, flp_2019_jun, flp_2019_jul, flp_2019_ago, flp_2019_set, flp_2019_out, flp_2019_nov, flp_2019_dez]).copy()
+
+#Limpeza dos códigos: remoção integral de linhas com outliers
+flp_2017.loc[(flp_2017.ta < 13)|(flp_2017.ta > 14.2)] = NaN
+flp_2017 = flp_2017.dropna(axis=0)
+
+flp_2018[(flp_2018.ta<13) | (flp_2018.ta > 14.2)] = NaN
+flp_2018= flp_2018.dropna(axis=0)
+
+flp_2019[(flp_2019.ta > 14.2)| (flp_2019.ta < 13)] = NaN
+flp_2019[(flp_2019.tc > 14.2)| (flp_2019.tc < 13)] = NaN
+flp_2019 = flp_2019.dropna(axis = 0)
+
+
+flp_2017_2019 = pd.concat([flp_2017, flp_2018, flp_2019]).copy()
+flp_2017_2019 = flp_2017_2019.set_index('horario')
+flp_2017_2019_med = flp_2017_2019.resample("d").mean().copy()
+
+#Importando os dados climáticos
+clima_2017 = pd.read_csv('https://drive.google.com/file/d/1WxFo_T6OJbcDYdkuQamkqeG47lrM8pjm/view?usp=sharing', parse_dates=['Data'], index_col=['Data'])
+clima_2018 = pd.read_csv('https://drive.google.com/file/d/1NDlbc72evjJygSoc38PE5cW7u3FJkdA6/view?usp=sharing', parse_dates=['Data'], index_col=['Data'])
+clima_2019 = pd.read_csv('https://drive.google.com/file/d/18QNp3f384ll39w12I-ZWvlLJCCy5maLl/view?usp=sharing', parse_dates=['Data'], index_col=['Data'])
+
+clima_2017_2019 = pd.concat([clima_2017, clima_2018, clima_2019]).copy()
+clima_2017_2019_med = clima_2017_2019.resample("d").mean().copy()
+
+Dataset = pd.concat([flp_2017_2019_med, clima_2017_2019_med])
+
+app = Dash()
+
+type_dropdown = dcc.Dropdown(options=Dataset.index.unique(),
+                            value='2017-01-01')
+
+app.layout = html.Div(children=[
+    html.H1(children='Avocado Prices Dashboard'),
+    type_dropdown,
+    dcc.Graph(id='price-graph')
+])
+
+@app.callback(
+    Output(component_id='price-graph', component_property='figure'),
+    Input(component_id=type_dropdown, component_property='value')
+)
+def update_graph(potencia):
+    filtered_avocado = Dataset[Dataset['type'] == potencia]
+    line_fig = px.line(filtered_avocado,
+                       x='date', y='Potencia',
+                       color='type',
+                       title=f'Potencia trifásica')
+    return line_fig
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
